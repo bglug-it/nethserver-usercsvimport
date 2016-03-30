@@ -1,6 +1,5 @@
-utente1	Nome1	Cognome1	utonti1	alsdlajsd
-utente2	Nome2	Cognome2	utonti1	alsdlajsd
-utente3	Nome3	Cognome3	lusers1	alsdlajsd
-utente4	Nome4	Cognome4	lusers4	alsdlajsd
-utente5	Nome5	Cognome5	lusers4	alsdlajsd
-
+utente1	Nome1	Cognome1	alsdlajsd	utonti1	lusers1	everybody
+utente2	Nome2	Cognome2	alsdlajsd	utonti1	everybody
+utente3	Nome3	Cognome3	alsdlajsd	lusers1	everybody
+utente4	Nome4	Cognome4	alsdlajsd	lusers4	lusers1	everybody
+utente5	Nome5	Cognome5	alsdlajsd	lusers4	everybody

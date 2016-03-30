@@ -32,7 +32,7 @@ while(<FH>) {
     chomp $_;
     $_ =~ s/\s+$//;
 
-    my ($username, $firstName, $lastName, $group, $password) = split(/$separator/, $_);
+    my ($username, $firstName, $lastName, $password, @groups) = split(/$separator/, $_);
 
     if( ! $username) {
         next;
@@ -53,11 +53,13 @@ while(<FH>) {
         next;
     }
 
-    if(!$accountsDb->get($group)) {
-        my $groupRecord = $accountsDb->new_record($group, {
-          'type' => 'group'
-        });
-        warn "[INFO] created group $group.\n";
+    foreach my $group (@groups) {
+      if(!$accountsDb->get($group)) {
+          my $groupRecord = $accountsDb->new_record($group, {
+            'type' => 'group'
+          });
+          warn "[INFO] created group $group.\n";
+      }
     }
 
     my $record = $accountsDb->new_record($username, {
@@ -77,8 +79,10 @@ while(<FH>) {
         next;
     }
 
-    $accountsDb->add_user_to_groups($username, $group);
-
+    foreach my $group (@groups) {
+      $accountsDb->add_user_to_groups($username, $group);
+    }
+    
     if($password) {
         my ($pfh, $pfilename) = tempfile('import_users_XXXXX', UNLINK=>0, DIR=>'/tmp');
         print $pfh $password;
