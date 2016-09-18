@@ -1,10 +1,12 @@
 #!/usr/bin/perl
 
-# TODO:  quando un gruppo viene cancellato, nel database cambia "tipo"
-#        e da "group" diventa "group-deleted".
-#        questo fa casino, perchè il gruppo esiste, ma è cancellato.
-#        bisogna gestire correttamente questa cosa
-
+# TODO:
+# - when a group is deleted, it changes type inside the database:
+#   from "group" it becomes "group-deleted".
+#   We still need to manage this, as we can't add a group with the same name
+#   of a removed group.
+# - It looks like the above problem is present for users also. The error is:
+# Attempt to create account 'XXXXXXXX' which already exists in passwd at /usr/share/perl5/vendor_perl/esmith/AccountsDB.pm line 493, <FH> line XXXXXXXX.
 
 use strict;
 use Getopt::Long;

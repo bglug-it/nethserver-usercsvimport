@@ -10,13 +10,13 @@ Beware that Microsoft Excel uses the semicolon (;) as a separator instead the co
 
 To import, simply call the script passing the input file as STDIN or via the --file switch.
 
-    ./importa_utenti.pl [--file INPUTFILE] [--separator SEPARATOR] [--add_existing_users_to_groups] [--remove_users]
+    ./users_import.pl [--file INPUTFILE] [--separator SEPARATOR] [--add_existing_users_to_groups] [--remove_users]
 
 Some examples:
 
-    ./importa_utenti.pl < test.csv
-    ./importa_utenti.pl --file test.csv --separator ";"
-    cat test.csv | ./importa_utenti.pl --separator "," --add_existing_users_to_groups
+    ./users_import.pl < test.csv
+    ./users_import.pl --file test.csv --separator ";"
+    cat test.csv | ./users_import.pl --separator "," --add_existing_users_to_groups
 
 You can specify a custom field separator.
 The import process will create all non-existing groups. If the user already exists and the "add_existing_users_to_groups" switch is NOT set, then the line is skipped (so if you specify a nonexistent group for this user, the group won't be created). If you enable "add_existing_users_to_groups" and the user is already present, the non-existing groups are created and the user is assigned to all the specified groups.
