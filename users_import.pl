@@ -5,8 +5,6 @@
 #   from "group" it becomes "group-deleted".
 #   We still need to manage this, as we can't add a group with the same name
 #   of a removed group.
-# - It looks like the above problem is present for users also. The error is:
-# Attempt to create account 'XXXXXXXX' which already exists in passwd at /usr/share/perl5/vendor_perl/esmith/AccountsDB.pm line 493, <FH> line XXXXXXXX.
 
 use strict;
 use Getopt::Long;
@@ -67,8 +65,16 @@ while(<FH>) {
     $record = $accountsDb->get($username);
     if($record) {
         if ( $remove_users ) {
-            $record->delete;
-            warn "[INFO] deleted $username\n";
+            $record->set_prop('type', 'user-deleted');
+            my @args = ('/usr/bin/sudo', '-n', '/sbin/e-smith/signal-event', 'user-delete', $username);
+            my $ret = system(@args);
+            if ($ret==0) {
+                $record->delete;
+                warn "[INFO] deleted user $username\n";
+            } else {
+                $record->set_prop('type', 'user');
+                warn "[INFO] unable to delete user $username\n";
+            }
             next;
         } else {
           if ( ! $add_existing_users_to_groups ) {
